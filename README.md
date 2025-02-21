@@ -1,16 +1,27 @@
-# demo_1
+# 種田小遊戲
 
-A new Flutter project.
+這是一個簡單的種田小遊戲，包含基本的種植、澆水和施肥功能。遊戲是使用 Flutter 開發，並且運用了拖曳和放置操作來觸發互動，素材使用 Stardew Valley 的植物。目標是創造一個輕鬆愉快的農田經營體驗，讓玩家在種植植物的同時，進行澆水和施肥來促進植物生長。
 
-## Getting Started
+## 功能
 
-This project is a starting point for a Flutter application.
+- **種植**：玩家可以在農田中種植各種植物。
+- **澆水**：玩家可以將水桶圖示拖曳到植物上，為植物澆水，促進其生長。
+- **施肥**：玩家可以拖曳肥料圖示到植物上，提升植物的生長速度。
 
-A few resources to get you started if this is your first Flutter project:
+## 開發環境
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **開發工具**: VSCode
+- **開發框架**: Flutter
+- **目標平台**: Android, iOS
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 開發過程
+
+1. **設計與規劃**：遊戲的基本功能是使用 AI 協助寫程式碼。但 AI 提供的邏輯無法完全符合我的需求，因此我重新設計了澆水與施肥功能，使之更符合直覺。
+
+2. **拖曳與放置功能**：澆水和施肥的操作是通過將水桶或肥料圖示拖動到植物上來實現的。
+
+## 截圖
+
+![初始畫面](/assets/Demo_1.png)
+![選擇種植](/assets/Choose_plant.png)
+![生長過程](/assets/growing.png)
