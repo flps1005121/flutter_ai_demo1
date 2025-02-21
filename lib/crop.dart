@@ -1,9 +1,9 @@
 class Crop {
   final String name;
-  final int growthTime; // in seconds
   final int cost;
+  final int growthTime;
   final int price;
-  final String imagePath;
+  final List<String> imagePaths;
 
-  Crop(this.name, this.growthTime, this.cost, this.price, this.imagePath);
+  Crop(this.name, this.cost, this.growthTime, this.price, this.imagePaths);
 }

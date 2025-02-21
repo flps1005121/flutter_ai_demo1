@@ -1,9 +1,9 @@
 import 'crop.dart';
 
 class GameData {
-  Crop? crop;
-  int growthStage;
+  final Crop? crop;
   DateTime? plantedTime;
+  int growthStage;
 
-  GameData({this.crop, this.growthStage = 0, this.plantedTime});
+  GameData({this.crop, this.plantedTime, this.growthStage = 0});
 }
