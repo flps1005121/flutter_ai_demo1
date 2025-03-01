@@ -12,7 +12,7 @@
 
 - **開發工具**: VSCode
 - **開發框架**: Flutter
-- **目標平台**: Android, iOS
+- **目標平台**: Android
 
 ## 開發過程
 
