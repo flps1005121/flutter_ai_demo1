@@ -1,6 +1,38 @@
 import 'package:flutter/material.dart';
 import '../models/pet.dart';
 
+// 自訂 PetTile 來顯示同出生地的其他寵物
+class PetTile extends StatelessWidget {
+  final Pet pet;
+
+  const PetTile({super.key, required this.pet});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      leading: CircleAvatar(
+        backgroundImage: AssetImage(pet.imagePath),
+        radius: 20,
+      ),
+      title: Text(
+        pet.breed,
+        style: const TextStyle(
+          fontFamily: 'Pixel',
+          color: Color(0xFFFFA726),
+        ),
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PetDetailScreen(pet: pet),
+          ),
+        );
+      },
+    );
+  }
+}
+
 class PetDetailScreen extends StatelessWidget {
   final Pet pet;
 
@@ -8,7 +40,6 @@ class PetDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 獲取所有寵物並過濾出同出生地的其他寵物（排除當前寵物）
     final allPets = Pet.getSamplePets();
     final sameOriginPets = allPets
         .where((p) =>
@@ -26,7 +57,7 @@ class PetDetailScreen extends StatelessWidget {
             fontFamily: 'Pixel',
           ),
         ),
-        backgroundColor: const Color(0xFFFFA726), // 保持與 HomeScreen 一致的橘色
+        backgroundColor: const Color(0xFFFFA726),
         automaticallyImplyLeading: true,
         leading: IconButton(
           icon: const Icon(
@@ -45,7 +76,7 @@ class PetDetailScreen extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFFFFF3E0), // 黃橘色系背景，與 HomeScreen 一致
+              Color(0xFFFFF3E0),
               Color(0xFFFFE0B2),
             ],
           ),
@@ -72,7 +103,7 @@ class PetDetailScreen extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Color(0xFFFFF8E1), // 卡片背景使用更淺的黃橘色漸層
+                          Color(0xFFFFF8E1),
                           Color(0xFFFFECB3),
                         ],
                       ),
@@ -116,33 +147,15 @@ class PetDetailScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 5),
-                              Wrap(
-                                spacing: 8.0,
-                                children: sameOriginPets.map((otherPet) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              PetDetailScreen(pet: otherPet),
-                                        ),
-                                      );
-                                    },
-                                    child: Chip(
-                                      label: Text(
-                                        otherPet.breed,
-                                        style: const TextStyle(
-                                          fontFamily: 'Pixel',
-                                          color: Color(0xFFFFA726),
-                                        ),
-                                      ),
-                                      backgroundColor: Colors.white,
-                                      side: const BorderSide(
-                                          color: Color(0xFFFFA726)),
-                                    ),
-                                  );
-                                }).toList(),
+                              SizedBox(
+                                height: 150, // 限制 ListView 的高度
+                                child: ListView.builder(
+                                  itemCount: sameOriginPets.length,
+                                  itemBuilder: (context, index) {
+                                    final otherPet = sameOriginPets[index];
+                                    return PetTile(pet: otherPet);
+                                  },
+                                ),
                               ),
                             ] else
                               Text(
