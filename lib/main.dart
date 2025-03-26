@@ -2,6 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'screens/home_screen.dart';
 
+// 創建一個單例類來管理 AudioPlayer
+class AudioManager {
+  static final AudioManager _instance = AudioManager._internal();
+  late AudioPlayer _audioPlayer;
+
+  factory AudioManager() {
+    return _instance;
+  }
+
+  AudioManager._internal() {
+    _audioPlayer = AudioPlayer();
+  }
+
+  AudioPlayer get audioPlayer => _audioPlayer;
+
+  void playBackgroundMusic() async {
+    try {
+      await _audioPlayer.setSource(AssetSource('background.mp3'));
+      await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+      await _audioPlayer.resume();
+    } catch (e) {
+      debugPrint("播放音樂時發生錯誤: $e");
+    }
+  }
+}
+
 void main() {
   runApp(const MyApp());
 }
@@ -11,6 +37,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 在應用啟動時播放背景音樂
+    AudioManager().playBackgroundMusic();
+
     return MaterialApp(
       title: '寵物圖鑑',
       theme: ThemeData(
@@ -78,7 +107,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const SplashScreen(), // 設置啟動畫面為首頁
+      home: const SplashScreen(),
     );
   }
 }
@@ -96,7 +125,6 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<double> _scaleAnimation;
-  late AudioPlayer _audioPlayer;
 
   @override
   void initState() {
@@ -113,9 +141,6 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     _controller.forward();
-
-    _audioPlayer = AudioPlayer();
-    _playBackgroundMusic();
 
     // 2秒後跳轉到 HomeScreen
     Future.delayed(const Duration(seconds: 2), () {
@@ -135,14 +160,9 @@ class _SplashScreenState extends State<SplashScreen>
     });
   }
 
-  void _playBackgroundMusic() async {
-    await _audioPlayer.play(DeviceFileSource('assets/background.mp3'));
-  }
-
   @override
   void dispose() {
     _controller.dispose();
-    _audioPlayer.dispose();
     super.dispose();
   }
 
